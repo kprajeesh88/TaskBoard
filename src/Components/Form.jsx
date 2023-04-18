@@ -15,13 +15,14 @@ function Form() {
 
   const handleAddNewTask = (e) => {
     e.preventDefault();
-
-    setTaskBoardData((prev) => {
-      return [
-        ...prev,
-        { id: unique_id, category: categories[0], task: newTask },
-      ];
-    });
+    newTask != "" &&
+      setTaskBoardData((prev) => {
+        return [
+          ...prev,
+          { id: unique_id, category: categories[0], task: newTask },
+        ];
+      });
+    setNeTask("");
   };
 
   return (
@@ -34,7 +35,11 @@ function Form() {
           onChange={handleNewTask}
           value={newTask}
         />
-        <button className="taskSubmit" onClick={handleAddNewTask}>
+        <button
+          className="taskSubmit"
+          disabled={!newTask}
+          onClick={handleAddNewTask}
+        >
           Submit
         </button>
       </div>
