@@ -1,32 +1,27 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import { useContext } from "react";
+import { TaskBoardContext } from "../App";
 
-function Form({ setTaskData }) {
-
-  const [newItem, setNewItem] = useState("");
+function Form() {
+  const unique_id = uuid();
+  const { taskBoardData, setTaskBoardData, categories } =
+    useContext(TaskBoardContext);
+  const [newTask, setNeTask] = useState("");
 
   const handleNewTask = (e) => {
-    setNewItem(e.target.value);
+    setNeTask(e.target.value);
   };
 
   const handleAddNewTask = (e) => {
     e.preventDefault();
 
-    const newTask = {
-      id: uuid(),
-      task: newItem,
-      category: "pending",
-    };
-
-    setTaskData((prev) => {
-      console.log("prev", prev);
-      return {
+    setTaskBoardData((prev) => {
+      return [
         ...prev,
-        tasks: [...prev.tasks, newTask],
-      };
+        { id: unique_id, category: categories[0], task: newTask },
+      ];
     });
-
-    console.log(newTask);
   };
 
   return (
@@ -37,7 +32,7 @@ function Form({ setTaskData }) {
           type="text"
           className="taskInput"
           onChange={handleNewTask}
-          value={newItem}
+          value={newTask}
         />
         <button className="taskSubmit" onClick={handleAddNewTask}>
           Submit

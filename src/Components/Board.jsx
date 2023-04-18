@@ -1,29 +1,67 @@
-function Board({ taskData: { categories, tasks }, setTaskData }) {
-  // console.log("categories", categories);
-  // console.log("tasks", tasks);
+import { useContext } from "react";
+import { TaskBoardContext } from "../App";
 
-  const handleClick = (boradItemCategory, boradItemId) => {
-    console.log(boradItemCategory, boradItemId);
-    // if (boradItemCategory == "completed") {
-    // }
+function Board({ categoryItem }) {
+  const { taskBoardData, setTaskBoardData, categories } =
+    useContext(TaskBoardContext);
+  console.log(taskBoardData);
+  const handleClick = (boardItemCategory, boardItemId) => {
+    if (boardItemCategory == categories[0]) {
+      setTaskBoardData((prev) => {
+        let updateCategory = prev.map((prev) =>
+          prev.id === boardItemId
+            ? {
+                ...prev,
+                category: categories[1],
+              }
+            : prev
+        );
+
+        return updateCategory;
+      });
+    } else if (boardItemCategory == categories[1]) {
+      setTaskBoardData((prev) => {
+        let updateCategory = prev.map((prev) =>
+          prev.id === boardItemId
+            ? {
+                ...prev,
+                category: categories[2],
+              }
+            : prev
+        );
+
+        return updateCategory;
+      });
+    } else if (boardItemCategory == categories[2]) {
+      setTaskBoardData((prev) => {
+        let updateCategory = prev.map((prev) =>
+          prev.id === boardItemId
+            ? {
+                ...prev,
+                category: categories[2],
+              }
+            : prev
+        );
+
+        return updateCategory;
+      });
+    }
   };
 
   return (
-    <div id="taskBoard">
+    <>
       {categories.map((category) => {
-        let result = tasks.filter((task) => task.category === category);
+        let result = taskBoardData.filter((task) => task.category === category);
         return (
           <div className="taskColumn" key={category}>
             <div className="columnHeader">
               <h3>{category}</h3>
             </div>
-
             <div className="taskItems">
               {result.map((item) => {
                 return (
                   <div className="taskItem" key={item.id}>
                     <p>{item.task}</p>
-                    {/* <p style={{ color: "yellow" }}>{item.category}</p> */}
                     <button
                       className={
                         "taskButton " +
@@ -42,7 +80,7 @@ function Board({ taskData: { categories, tasks }, setTaskData }) {
           </div>
         );
       })}
-    </div>
+    </>
   );
 }
 

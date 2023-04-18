@@ -1,19 +1,26 @@
-import Board from "./Components/Board";
+import Board from "./Components/Main";
 import Footer from "./Components/Footer";
 import Form from "./Components/Form";
 import Header from "./Components/Header";
 import data from "./BoardData";
-import { useState } from "react";
+import { createContext, useState } from "react";
+import Main from "./Components/Main";
+
+export const TaskBoardContext = createContext();
 
 function App() {
-  const [taskData, setTaskData] = useState(data);
-  // const [task, setTask] = useState(taskData.tasks);
+  const [taskBoardData, setTaskBoardData] = useState(data.tasks);
+  const [categories, setCategories] = useState(data.categories);
 
   return (
     <div className="App">
       <Header />
-      <Form setTaskData={setTaskData} />
-      <Board taskData={taskData} setTaskData={setTaskData} />
+      <TaskBoardContext.Provider
+        value={{ taskBoardData, setTaskBoardData, categories }}
+      >
+        <Form />
+        <Main />
+      </TaskBoardContext.Provider>
       <Footer />
     </div>
   );
