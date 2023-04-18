@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { TaskBoardContext } from "../App";
 
-function Board({ categoryItem }) {
+function Board() {
   const { taskBoardData, setTaskBoardData, categories } =
     useContext(TaskBoardContext);
-  console.log(taskBoardData);
+
   const handleClick = (boardItemCategory, boardItemId) => {
     if (boardItemCategory == categories[0]) {
       setTaskBoardData((prev) => {
@@ -34,15 +34,7 @@ function Board({ categoryItem }) {
       });
     } else if (boardItemCategory == categories[2]) {
       setTaskBoardData((prev) => {
-        let updateCategory = prev.map((prev) =>
-          prev.id === boardItemId
-            ? {
-                ...prev,
-                category: categories[2],
-              }
-            : prev
-        );
-
+        let updateCategory = prev.filter((item) => item.id != boardItemId);
         return updateCategory;
       });
     }
